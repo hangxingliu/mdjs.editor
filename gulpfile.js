@@ -6,8 +6,11 @@
  */
 
 //-------------_____一些必要的字段置______---------------------
+var show_forkme = 'true';
+
 var dist_path = 'dist/';
 var now = new Date().getTime();
+
 var minihtml_opts = {
 	removeComments:true,//去掉HTML注释
 	collapseWhitespace:true,//去掉空白字符
@@ -51,7 +54,8 @@ g.task('handler_html',['cp_js_to_one'],function(){
 	var s = g.src('./src/**/*.html',{'base':''})
 		.pipe(pp({context:{
 			ALL_SCRIPT : '<script src="lib/editor.all.js"></script>',
-			ALL_STYLESHEET : '<link rel="stylesheet" href="css/editor.all.css"/>'
+			ALL_STYLESHEET : '<link rel="stylesheet" href="css/editor.all.css"/>',
+			GITHUB_DEMO : show_forkme//设置这句话
 		 } }))
 		.pipe(minihtml(minihtml_opts))
 		.pipe(g.dest(dist_path));

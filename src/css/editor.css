@@ -1,5 +1,5 @@
 /*编辑器样式*/
-html,body{padding: 0;margin: 0;font-family:"Robot","microsoft yahei";}
+html,body{padding: 0;margin: 0;font-family:"microsoft yahei";}
 body{padding: 5px;background-color: #150F08;}
 
 /*编辑器菜单栏*/
@@ -84,7 +84,7 @@ a[data-op=settings]{background-image:url(../img/tools.png);}
 	float: right;
 	overflow-y: scroll;
 	word-wrap: break-word;
-	font-family: "Robot","microsoft yahei";
+	font-family: "microsoft yahei";
 	background-color: white;
 }
 #output::-webkit-scrollbar{width:0;}
