@@ -1,8 +1,0 @@
-CACHE MANIFEST
-#VERSION: <!-- @echo UPDATE_TIME -->
-
-CACHE:
-index.html
-css/*.css
-lib/*.js
-img/*.png
