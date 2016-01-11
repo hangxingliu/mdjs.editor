@@ -1,0 +1,17 @@
+/*Toast背景区域,用于使Toast横向居中*/
+.toast_bg{
+	position:absolute;
+	z-index:200;
+	left:0;top:42px;
+	width:100%;
+}
+/*Toast前景内容*/
+.toast_bd{
+	border: 1px solid black;
+	border-radius: 6px;
+	display: none;
+	padding: .5em 1em;
+	margin:0 auto;
+	text-align:center;
+	width:15em;max-width:100%;
+}

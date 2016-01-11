@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>设置选项</title>
+		<link rel="stylesheet" href="css/settings.css"/>
+		<script src="lib/jquery.min.js"></script>
+		<script src="lib/h5storage.js"></script>
+		<script src="lib/settings.js"></script>
+	</head>
+	<body>
+		<div class="set_all">
+			<div class="set_all_title">编辑器选项</div>
+			<div class="set_bar set_checkbar">
+				<div class="set_checkbox set_checked" onclick="$(this).toggleClass('set_checked');"
+					data-sttype="boolean" data-stname="ebls"></div>
+				<div class="set_title">启用LocalStorage实时保存</div>
+				<div class="set_checkdetail">如果希望同时编辑多个Markdown内容,请不要勾选</div>
+			</div>
+			<div class="set_bar set_inputbar">
+				<div class="set_title">导出HTML的附加样式表URL</div>
+				<input type="text" class="set_inputbox"
+					data-sttype="string" data-stname="epcss"
+					placeholder="为导出的HTML文件引用一个CSS样式表" />
+			</div>
+			<div class="set_bottom">
+				<button id="set_save" onclick="saveSt();">保存</button>
+				<button id="set_cancel"
+					onclick="if(confirm('确定要重置当前选项?'))loadSt();">取消</button>
+			</div>
+		</div>
+		<script>$(function(){
+			loadSt();
+		});</script>
+	</body>
+</html>

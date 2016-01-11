@@ -1,0 +1,92 @@
+*{font-family: 'Robot',"microsoft yahei";}
+html,body{padding: 0;margin: 0;}
+.set_all{
+	/*background-color: #F2F2F2;*/
+	padding: .5em;
+	margin: 0;
+}
+.set_all_title{
+	text-align: center;
+	font-size: 1.8em;
+	margin: 0 0 .5em 0;
+	padding: 0 0 .2em 0;
+	border-bottom: thin solid #888;
+}
+.set_bar{
+	padding: .2em 1em .2em .5em;
+	border-bottom: thin solid #AAA;
+}
+.set_title{
+	font-size: 1.2em;
+	line-height: 1.3em;
+}
+.set_bottom{
+	height: 2.5em;
+	padding: .2em .5em;
+}
+.set_bottom button{
+	float: right;
+	font-size: 1.3em;
+	padding: .2em .5em;
+	border: thin solid black;
+}
+.set_bottom button:active{
+	border: none;outline: none;
+}
+.set_bottom button:focus{
+	outline: none;
+}
+
+#set_save{
+	color: #3C763D;
+	background-color: #DFF0D8;
+	border-color: #D6E9C6;
+}
+#set_save:hover{
+	box-shadow: 0 0 10px #3C763D;
+}
+#set_cancel{
+	color: #333;
+	background-color: #E6E6E6;
+	border-color: #ADADAD;
+	margin-right: .2em;
+}
+#set_cancel:hover{
+	box-shadow: 0 0 10px #333;
+}
+
+
+.set_checkbar{
+	height: 2.5em;
+}
+.set_checkbox{
+	width: 1.9em;
+	height: 1.9em;
+	border: .3em solid #000;
+	float: left;
+	margin: 0 .2em 0 0;
+	cursor: pointer;
+}
+.set_checked{
+	background-color: #007500;
+}
+.set_checkdetail{
+	font-size: .8em;
+	line-height: 1em;
+	height: 1em;
+	padding: 0 0 0 1em;
+	color: #333;
+	overflow: hidden;
+	clear: right;
+}
+
+.set_inputbar{
+	height: 4em;
+}
+.set_inputbox{
+	width: 90%;
+	margin: .2em 0 0 2em;
+	padding: 0 .5em;
+	line-height: 2em;
+}
+
