@@ -28,4 +28,6 @@ function saveSt(){
 		}
 	});
 	H5S.settings = st;
+	//更新编辑器的设置
+	var a = parent.window.H5S.settings;
 }
