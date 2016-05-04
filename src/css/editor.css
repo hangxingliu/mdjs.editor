@@ -37,7 +37,7 @@ body{padding: 5px;background-color: #150F08;}
 	text-align: center;
 	color: white;
 	font-size: 15px;line-height: 35px;
-	pointer-events: none;
+	pointer-events: none;/*防止阻挡背后按钮的事件响应*/
 }
 
 /*编辑器菜单栏中显示文件名*/
