@@ -1,10 +1,20 @@
 /*编辑器样式*/
-html,body{padding: 0;margin: 0;font-family:"microsoft yahei";}
-body{padding: 5px;background-color: #150F08;}
+html,body{
+	padding: 0;
+	margin: 0;
+	font-family:"microsoft yahei";
+	height: 100%;
+}
+body{
+	background-color: #282421;
+	overflow: hidden;
+}
 
 /*编辑器菜单栏*/
 #menu{
-	width:100%;height: 35px;
+	width:100%;
+	height: 35px;
+	margin-top: 5px;
 	padding: 0;
 	color: white;
 	border-bottom: 2px solid gray;
@@ -65,23 +75,29 @@ a[data-op=settings]{background-image:url(../img/tools.png);}
 
 /*编辑器的输入框*/
 #input{
+	background-color:#282421;
 	height: 100%;
-	background-color:#150F08;color:#F8F8FF;
-	margin: 0px;padding: 5px;float: left;
-	resize: none;font-family:"microsoft yahei";
-	font-size: 1.1em;line-height: 1.5em;overflow: auto;
+	float: left;
+	color:#F8F8FF;
+	margin: 0px;
+	resize: none;
+	font-family:"microsoft yahei";
+	font-size: 1.1em;
+	line-height: 1.5em;
+	overflow: auto;
 	border: none;
 	scrollbar-base-color: white;
 	scrollbar-highlight-color: white;
 }
 #input:focus{outline: none;}
 #input::-webkit-scrollbar{width:0;}
+#input::-moz-scrollbar{width:0;}
 
 /*编辑器的预览框*/
 #output{
 	height: 100%;
-	margin:  0px;padding: 5px 5px 5px 12px;
 	float: right;
+	margin:  0px;
 	overflow-y: scroll;
 	word-wrap: break-word;
 	font-family: "microsoft yahei";

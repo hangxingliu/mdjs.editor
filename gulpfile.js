@@ -8,7 +8,8 @@
 //-------------_____一些必要的字段置______---------------------
 var show_forkme = 'true';
 
-var dist_path = 'dist/';
+var src_path = './src/';
+var dist_path = './dist/';
 var now = new Date().getTime();
 
 var minihtml_opts = {
@@ -23,13 +24,13 @@ var minihtml_opts = {
 };
 
 //-------------____引入一些必要的Gulp外挂____-------------------
-var g =require("gulp");
-var cl = require("gulp-clean");
-var concat = require("gulp-concat");
-var minijs = require('gulp-uglify');
-var minicss = require('gulp-minify-css');
-var minihtml = require('gulp-htmlmin');
-var pp = require('gulp-preprocess');
+var g			= require("gulp");
+var cl			= require("gulp-clean");
+var concat		= require("gulp-concat");
+var minijs		= require('gulp-uglify');
+var minicss		= require('gulp-minify-css');
+var minihtml	= require('gulp-htmlmin');
+var pp 			= require('gulp-preprocess');
 
 //-------------______Gulp任务开始___________-----------------
 //任务入口
@@ -40,7 +41,7 @@ g.task('release',['update_manifest'],function(){
 
 //更新cache.manifest文件
 g.task('update_manifest',['handler_html'],function(){
-	var s = g.src('./src/**/*.manifest',{'base':''})
+	var s = g.src(src_path + '**/*.manifest',{'base':''})
 		.pipe(pp({context:{
 			UPDATE_TIME : now
 		 } }))
@@ -51,7 +52,7 @@ g.task('update_manifest',['handler_html'],function(){
 
 //优化处理HTML文件
 g.task('handler_html',['cp_js_to_one'],function(){
-	var s = g.src('./src/**/*.html',{'base':''})
+	var s = g.src(src_path + '**/*.html',{'base':''})
 		.pipe(pp({context:{
 			ALL_SCRIPT : '<script src="lib/editor.all.js"></script>',
 			ALL_STYLESHEET : '<link rel="stylesheet" href="css/editor.all.css"/>',
@@ -66,13 +67,13 @@ g.task('handler_html',['cp_js_to_one'],function(){
 //合并并优化Javascript文件
 g.task('cp_js_to_one',['handler_js'],function(){
 	var s = g.src([
-			'./src/lib/toast.js',
-			'./src/lib/mdjs.js',
-			'./src/lib/localio.js',
-			'./src/lib/h5storage.js',
-			'./src/lib/export.js',
-			'./src/lib/history.jq.js',
-			'./src/lib/editor.js'
+			src_path + 'lib/toast.js',
+			src_path + 'lib/mdjs.js',
+			src_path + 'lib/localio.js',
+			src_path + 'lib/h5storage.js',
+			src_path + 'lib/export.js',
+			src_path + 'lib/history.jq.js',
+			src_path + 'lib/editor.js'
 			],{'base':''})
 		.pipe(concat('lib/editor.all.js',{newLine: ';'}))
 		.pipe(minijs())
@@ -84,9 +85,9 @@ g.task('cp_js_to_one',['handler_js'],function(){
 //优化Javascript文件
 g.task('handler_js',['handler_css_to_one'],function(){
 	var s = g.src([
-			'./src/lib/*.min.js',
-			'./src/lib/h5storage.js',
-			'./src/lib/settings.js'
+			src_path + 'lib/*.min.js',
+			src_path + 'lib/h5storage.js',
+			src_path + 'lib/settings.js'
 		 ],{'base':'src'})
 		.pipe(minijs())
 		.pipe(g.dest(dist_path));
@@ -97,9 +98,9 @@ g.task('handler_js',['handler_css_to_one'],function(){
 //合并且优化CSS文件
 g.task('handler_css_to_one',['handler_css'],function(){
 	var s =	g.src([
-			'./src/css/editor.css',
-			'./src/css/dialog.css',
-			'./src/css/toast.css'
+			src_path + 'css/editor.css',
+			src_path + 'css/dialog.css',
+			src_path + 'css/toast.css'
 			],{'base':''})
 		.pipe(concat('css/editor.all.css'))
 		.pipe(minicss())
@@ -111,8 +112,8 @@ g.task('handler_css_to_one',['handler_css'],function(){
 //优化CSS文件
 g.task('handler_css',['clean'],function(){
 	var s =	g.src([
-		'./src/css/settings.css',
-		'./src/css/mdcss.css'
+		src_path + 'css/settings.css',
+		src_path + 'css/mdcss.css'
 		],{'base':'src'})
 		.pipe(minicss())
 		.pipe(g.dest(dist_path));
@@ -130,7 +131,7 @@ g.task('clean',['handler_files'], function(){
 
 //复制全部文件到dist目录
 g.task('handler_files',['clean_all'],function(){
-	var s = g.src('./src/**/*',{'base':''})
+	var s = g.src(src_path + '**/*',{'base':''})
 		.pipe(g.dest(dist_path));
 	console.log('初次复制文件到dist目录完毕');
 	return s;
@@ -138,7 +139,7 @@ g.task('handler_files',['clean_all'],function(){
 
 //清空dist目录
 g.task('clean_all',function(){
-	var s = g.src(['./'+dist_path+'*'], {'read': false}).pipe(cl());
+	var s = g.src([dist_path+'*'], {'read': false}).pipe(cl());
 	console.log('清理dist目录完毕')	
 	return s;
 });

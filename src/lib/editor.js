@@ -2,13 +2,14 @@
  * 一些常用到的DOM元素
  */
 filedlg = $('#filedlg');
-editorView = $('#editor');
+$editorView = $('#editor');
 inputView = $('#input');
 outputView = $('#output');
 filenameView = $('#filename span');
 dlg_title = $('#helpset_title span');
 dlg_iframe= $('#helpset_dlg iframe');
 dlg_bd	  = $('#helpset_dlg');
+
 
 /**
  * @description 目前编辑的Markdown文件对象
@@ -136,7 +137,7 @@ function onMenu_settings(){
  */
 function showIframeDlg(title,url){
 	dlg_title.text(title);
-	dlg_iframe.height(editorView.height()-50).attr('src',url);
+	dlg_iframe.height($editorView.height()-50).attr('src',url);
 	dlg_bd.slideToggle(500);
 }
 
@@ -464,9 +465,9 @@ function preview(){
  * @description 动态调整编辑器输入框与预览区的尺寸
  */
 function resizeEditor(){
-	var w = editorView.width()-30;
-	var h = $(window).height()-52;
-	inputView.width(w*0.5).height(h);
-	outputView.width(w*0.48).height(h);
+	var w = $editorView.width()-30;
+	$editorView.height($(window).height()-42);
+	inputView.width(w*0.5);
+	outputView.width(w*0.5);
 	return true;
 }

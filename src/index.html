@@ -1,10 +1,10 @@
+<!DOCTYPE html>
 <!--
 	Mdjs.editor
 	基于Mdjs解析器的在线Markdown编辑器
 	作者:刘越
-	2016/01/01
+	2016/05/04
 -->
-<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -13,13 +13,17 @@
 		<title>Mdjs Editor</title>
 		
 		<link rel="stylesheet" href="css/mdcss.css"/>
+		
 		<!-- @exclude -->
+		<!-- 此部分内容在构建发布的时候会被去掉 -->
 		<link rel="stylesheet" href="css/editor.css"/>
 		<link rel="stylesheet" href="css/dialog.css"/>
 		<link rel="stylesheet" href="css/toast.css"/>
 		<!-- @endexclude -->
 		
+		<!-- 下面这行代码是让构建发布的时候能直接引入打包好的CSS -->
 		<!-- @echo ALL_STYLESHEET -->
+		
 	</head>
 	<body>
 		<!-- 这个链接用于实现保存文件的功能 $('#filesave').click(); -->
@@ -51,6 +55,7 @@
 			<textarea id="input" spellcheck="false"></textarea>
 			<!--编辑器预览区域-->
 			<div class="md" id="output"></div>
+			<div style="clear: both"></div>
 		</div>
 	
 	<!-- 三个对话框 -->
@@ -96,6 +101,7 @@
 				<button class="dialog_cancel" onclick="hideDialog();">取消</button>
 			</div>
 		</div>
+	
 	</div>
 	
 	<!--大对话框,用于展示帮助关于页面和设置页面-->
@@ -124,7 +130,7 @@
 	
 	<!-- @if GITHUB_DEMO='true' -->
 <a href="https://github.com/hangxingliu/mdjs.editor" target="_blank">
-	<div class="forkme" style="position: absolute;bottom: 0;right: .5em;background-color: #007100;padding: 2px;">
+	<div class="forkme" style="position: fixed;bottom: 0;right: .5em;background-color: #007100;padding: 2px;">
 	<div style="color: #eee;border: 2px solid #eee;padding: .5em 1em;margin: 0;">
 		Fork me on GitHub
 	</div>

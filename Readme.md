@@ -1,10 +1,11 @@
 # Mdjs.editor
 > 一款基于`Mdjs`写的在线Markdown编辑器
+> 好久没更新了,随着前端知识的长进,这个编辑又要准备被改头换面啦!!
 
 ---
-`2016年01月11日`
+`2016年05月04日`
 
-编辑器版本 `0.1 Dev` Mdjs 版本: (`0.4 Dev`)
+编辑器版本 `0.11 Dev` Mdjs 版本: (`0.4 Dev`)
 
 > **演示页面**: <http://hangxingliu.github.io/mdjs.editor>
 
