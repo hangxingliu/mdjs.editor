@@ -35,27 +35,32 @@
 		</div>
 		<!--顶端菜单的按钮集-->
 		<div id="menu">
-			<div class="menu_left">
+			<div class="menu_side" style="float: left">
 				<input type="file" name="filedlg" id="filedlg" style="display: none;"
 					onchange="onFileSelect(event)" onclick="onFileClick(event)" />
 				<a data-op="new" data-sc="n" title="新建一个Markdown文件">新建</a>
-				<a data-op="open" data-sc="o" title="打开本地Markdwon文件(Ctrl+O)">打开</a>
-				<a data-op="save" data-sc="s" title="保存到本地(Ctrl+S)">保存</a>
+				<a data-op="open" data-sc="o" title="打开本地Markdwon文件(Ctrl+O)">&nbsp;打开</a>
+				<a data-op="save" data-sc="s" title="保存到本地(Ctrl+S)">&nbsp;保存</a>
 			</div>
-			<div class="menu_right">
-				<a data-op="export" title="导出成HTML文件">导出HTML</a>
-				<a data-op="help"  data-sc="191" title="Ctrl+/">帮助关于</a>
-				<a data-op="settings" title="编辑器设置">设置选项</a>
+			<div class="menu_side" style="float: right">
+				<a data-op="export" title="导出成HTML文件">&nbsp;导出HTML</a>
+				<a data-op="help"  data-sc="191" title="Ctrl+/">&nbsp;帮助关于</a>
+				<a data-op="settings" title="编辑器设置">&nbsp;设置选项</a>
 			</div>
 		</div>
 		
 		<!--编辑器区域-->
 		<div id="editor" ondrop="onFileDropping(event);">
 			<!--编辑器输入框-->
-			<textarea id="input" spellcheck="false"></textarea>
+			<div class="half_wrapper" style="left: 0">
+				<div class="margin_wrapper">
+					<textarea id="input" spellcheck="false"></textarea>
+				</div>
+			</div>
 			<!--编辑器预览区域-->
-			<div class="md" id="output"></div>
-			<div style="clear: both"></div>
+			<div class="half_wrapper output_wrapper" style="left: 50%;background-color: white;">
+				<div class="md" id="output"></div>
+			</div>
 		</div>
 	
 	<!-- 三个对话框 -->

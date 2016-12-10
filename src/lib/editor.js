@@ -1,14 +1,16 @@
 /*
  * 一些常用到的DOM元素
  */
-filedlg = $('#filedlg');
-$editorView = $('#editor');
-inputView = $('#input');
-outputView = $('#output');
-filenameView = $('#filename span');
-dlg_title = $('#helpset_title span');
-dlg_iframe= $('#helpset_dlg iframe');
-dlg_bd	  = $('#helpset_dlg');
+var filedlg = $('#filedlg'),
+	$editorView = $('#editor'),
+	$halfWrapperInEditorView = $('#editor .half_wrapper'),
+	$inputView = $('#input'),
+    $outputView = $('#output'),
+	$outputWrapper = $('.output_wrapper'),
+	filenameView = $('#filename span'),
+	dlg_title = $('#helpset_title span'),
+	dlg_iframe= $('#helpset_dlg iframe'),
+	dlg_bd = $('#helpset_dlg');
 
 
 /**
@@ -58,10 +60,10 @@ $(function(){
 	initShortcut();
 	resizeEditor();
 	setTimeout(resizeEditor,500);
-	inputView.initHistory(1<<7);
-	inputView.val(H5S.getValue('ebls')?H5S.content:"");
-	inputView.record();
-	outputView.html(Mdjs.md2html(inputView.val()));
+	$inputView.initHistory(1<<7);
+	$inputView.val(H5S.getValue('ebls')?H5S.content:"");
+	$inputView.record();
+	$outputView.html(Mdjs.md2html($inputView.val()));
 });
 
 /**
@@ -107,13 +109,13 @@ function onMenu_open(){
 	$('#filedlg').click();
 }
 function onMenu_save(){
-	saveMd(inputView.val(),nowFile.name);
+	saveMd($inputView.val(),nowFile.name);
 }
 function onMenu_export(){
 	var fname = nowFile.name;
 	fname = fname.slice(0,fname.lastIndexOf('.'));
 	var linkcss = H5S.getValue('epcss');
-	var html = Exporter.exportHTML(outputView.html(),fname,
+	var html = Exporter.exportHTML($outputView.html(),fname,
 		linkcss?linkcss:'http://git.oschina.net/voyageliu/mdjs/raw/master/mdcss.css');
 	saveMd(html,fname+'.html');
 }
@@ -215,7 +217,7 @@ function showModiNameDlg(){
  */
 function onNewFileDlgDone(){
 	_modiName($('#text_newname').val().trim());
-	inputView.val('').focus();
+	$inputView.val('').focus();
 	hideDialog();
 }
 
@@ -298,8 +300,8 @@ function onReadMdAbort(){
  */
 function onReadMdDone(md){
 	fileStatusChange(loadingFile);
-	inputView.val(md).focus().scrollTop(0);
-	outputView.html(Mdjs.md2html(md));
+	$inputView.val(md).focus().scrollTop(0);
+	$outputView.html(Mdjs.md2html(md));
 	if(H5S.getValue('ebls'))H5S.content = md;
 	Toast.text('读取文件('+loadingFile.name+')成功!',2000);
 };
@@ -308,14 +310,14 @@ function onReadMdDone(md){
 /**
  * @description 当编辑器输入框输入,滚动时进行的过程,包括响应Tab键,快捷键,实时显示,同步预览区域位置
  */
-inputView.keydown(function(e){
+$inputView.keydown(function(e){
 	var sel0 = this.selectionStart,sel1 = this.selectionEnd;
 	
 	if(this.mustRecord){//由于上一次粘贴了文本,所以此次必须记录
 		this.mustRecord=false;
-		inputView.record();
+		$inputView.record();
 	}else{
-		inputView.autoRecord(e);
+		$inputView.autoRecord(e);
 	}
 	
 	var v,p0,p1,p2;
@@ -422,10 +424,10 @@ inputView.keydown(function(e){
 			this.mustRecord = true;
 			return;
 		case 90://Z undo
-			inputView.undo();
+			$inputView.undo();
 			break;
 		case 89://Y redo
-			inputView.redo();
+			$inputView.redo();
 			break;
 		default:
 			return ;
@@ -435,10 +437,10 @@ inputView.keydown(function(e){
 	}
 }).bind('input',preview//实时解析
 ).scroll(function(){//预览区域滚动
-	var ih = inputView[0].scrollHeight - inputView.height(),
-		oh = outputView[0].scrollHeight - outputView.height();
+	var ih = $inputView[0].scrollHeight - $inputView.height(),
+		oh = $outputWrapper[0].scrollHeight - $outputWrapper.height();
 	var ipn = this.scrollTop;
-	outputView[0].scrollTop = ipn/ih*oh;
+	$outputWrapper[0].scrollTop = ipn/ih*oh;
 });
 
 /**
@@ -456,18 +458,19 @@ function cEvent(e,ctrl,shift,alt){
  * @description 预览编辑器输入框内Markdown的效果,并保存当前内容到LocalStorage
  */
 function preview(){
-	var md = inputView.val();
+	var md = $inputView.val();
 	if(H5S.getValue('ebls'))H5S.content = md;
-	outputView.html(Mdjs.md2html(md));
+	$outputView.html(Mdjs.md2html(md));
 }
 
 /**
  * @description 动态调整编辑器输入框与预览区的尺寸
  */
 function resizeEditor(){
-	var w = $editorView.width()-30;
-	$editorView.height($(window).height()-42);
-	inputView.width(w*0.5);
-	outputView.width(w*0.5);
+	// var w = $editorView.width() - 80;
+	var h = $(window).height() - 37;
+	$editorView.height(h);
+	$halfWrapperInEditorView.height(h);
+	$inputView.height(h - 40);
 	return true;
 }

@@ -1,6 +1,6 @@
 {
   "name": "mdjs.editor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A online Markdown editor based Mdjs",
   "main": "index.js",
   "dependencies": {
@@ -21,7 +21,7 @@
   "keywords": [
     "Markdown",
     "Editor",
-    "WebEditor",
+    "WebEditor"
   ],
   "author": "Liuyue",
   "license": "Apache-2.0"

@@ -3,9 +3,9 @@
 > 好久没更新了,随着前端知识的长进,这个编辑又要准备被改头换面啦!!
 
 ---
-`2016年05月04日`
+`2016年12月11日`
 
-编辑器版本 `0.11 Dev` Mdjs 版本: (`0.4 Dev`)
+编辑器版本 `0.2 Dev` Mdjs 版本: (`0.4 Dev`)
 
 > **演示页面**: <http://hangxingliu.github.io/mdjs.editor>
 
@@ -15,6 +15,11 @@
 ![我的微博:](http://www.sinaimg.cn/blog/developer/wiki/LOGO_16x16.png) [@航行刘](http://weibo.com/chinavl)
 
 [TOC]
+
+## 0.1.0 => 0.2.0
+
+1. 优化了一下CSS和Javascript代码
+2. 给预览输出带上了滚动条
 
 ## 开源声明
 

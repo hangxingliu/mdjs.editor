@@ -13,17 +13,20 @@ body{
 /*编辑器菜单栏*/
 #menu{
 	width:100%;
-	height: 35px;
-	margin-top: 5px;
-	padding: 0;
+	height: 50px;
 	color: white;
 	border-bottom: 2px solid gray;
+}
+
+.menu_side{
+	padding: 10px 0;
+	margin: 0 1em;	
 }
 
 /*编辑器菜单栏内的按钮*/
 #menu a{
 	margin-right: 1em;
-	font-size: 20px;
+	font-size: 16px;
 	line-height: 35px;
 	padding-left: 35px;
 	background-repeat: no-repeat;
@@ -32,17 +35,10 @@ body{
 }
 #menu a:active{color: #DDD;}
 
-/*编辑器菜单栏靠左的按钮*/
-.menu_left{
-	float: left;
-	display: inline-block;
-	margin-left: 1em;
-}
-
 /*编辑器菜单栏居中的显示文件名的控件的背景,为了居中*/
 #filename{
 	position: absolute;
-	left: 0;top: 5px;
+	left: 0;top: 10px;
 	width: 100%;height: 35px;
 	text-align: center;
 	color: white;
@@ -55,12 +51,6 @@ body{
 	pointer-events: all;
 }
 
-/*编辑器菜单栏靠右的按钮*/
-.menu_right{
-	float: right;
-	display: inline-block;
-	margin-right: 1em;
-}
 
 /*编辑器菜单栏中各个按钮的图标*/
 a[data-op=new]{background-image:url(../img/file.png);}
@@ -71,21 +61,39 @@ a[data-op=help]{background-image:url(../img/comment.png);}
 a[data-op=settings]{background-image:url(../img/tools.png);}
 
 /*编辑器区域*/
-#editor{padding: 0px;}
+#editor{
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+.half_wrapper{
+	width: 50%;
+	position: absolute;
+	top: 0;
+}
+.margin_wrapper{
+	margin: 20px;
+}
 
 /*编辑器的输入框*/
 #input{
-	background-color:#282421;
-	height: 100%;
-	float: left;
 	color:#F8F8FF;
-	margin: 0px;
+	background-color:#282421;
+	
 	resize: none;
 	font-family:"microsoft yahei";
+	
 	font-size: 1.1em;
 	line-height: 1.5em;
+	
 	overflow: auto;
 	border: none;
+	
+	height: 100%;
+	width: 100%;
+
+	display: block;
+
 	scrollbar-base-color: white;
 	scrollbar-highlight-color: white;
 }
@@ -95,15 +103,16 @@ a[data-op=settings]{background-image:url(../img/tools.png);}
 
 /*编辑器的预览框*/
 #output{
-	height: 100%;
-	float: right;
-	margin:  0px;
-	overflow-y: scroll;
+	margin: 20px;
+	margin-bottom: 50px;
 	word-wrap: break-word;
 	font-family: "microsoft yahei";
 	background-color: white;
 }
-#output::-webkit-scrollbar{width:0;}
+.output_wrapper {
+	overflow-y: scroll;
+}
+/*.output_wrapper::-webkit-scrollbar{width:0;}*/
 
 /*用于显示帮助关于以及设置的大对话框*/
 #helpset_dlg{
