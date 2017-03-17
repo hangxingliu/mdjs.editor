@@ -10,7 +10,8 @@
         "Mdjs": true,
         "initFileDragAndDrop": true,
         "LocalFileSystem": true,
-        "browserStorage": true
+        "browserStorage": true,
+        "browserStorageDialog": true
     },
 
     "parserOptions": {

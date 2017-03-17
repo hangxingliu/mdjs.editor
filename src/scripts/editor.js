@@ -4,7 +4,10 @@ var Editor = function() {
 	var mdjs = new Mdjs();
 
 	var Fs = new LocalFileSystem();
-	
+	var dlgBrowserFiles = browserStorageDialog;
+	dlgBrowserFiles.onload(openFileInBrowserStorage);
+	dlgBrowserFiles.ondel(list => toastInfo(`已删除 <b>${list.length}</b> 个浏览器存储的文件!`));
+
 	var $container = $('#editorContainer'),	
 		$fname = $container.find('.editor-filename')
 			.click(() => showRenameDialog(currentFileInfo.title)),
@@ -17,8 +20,6 @@ var Editor = function() {
 	
 	var $dlgFileName = $('#dlgNewFile'),
 		$dlgFileNameInput = $dlgFileName.find('input'),
-		$dlgBrowserFiles = $('#dlgBrowserFiles'),
-		$dlgBrowserFilesList = $dlgBrowserFiles.find('.list-group'),
 		isCreatingNewFile = false,
 		loadingFileName = '';
 
@@ -27,7 +28,8 @@ var Editor = function() {
 	var currentFileInfo = {
 		id: 0,
 		title: '',
-		content: ''
+		content: '',
+		timestamp: 0
 	};
 
 	var outputTmpl = $('#editorOutputTmpl').html();
@@ -124,10 +126,7 @@ var Editor = function() {
 		newFile(fname, content);
 		toastSuccess(`读取本地文件成功!<br/><b>${fname}</b>`);
 	}
-	this.openFileInBrowser = id => {
-		$dlgBrowserFiles.modal('hide');
-		var file = browserStorage.getFile(id);
-		if (!file) return toastError(`加载浏览器内文件出错!<br/><b>${file.title}</b>`);
+	function openFileInBrowserStorage(file) {
 		newFile(file.title, file.content, file.id);
 		toastInfo(`加载成功!<br/><b>${file.title}</b>`, 2000);
 	}
@@ -175,7 +174,7 @@ var Editor = function() {
 		var eventMap = {
 			"new": showNewFileDialog,
 			open_local: clickOpenLocalFile,
-			open_browser: () => showBrowserFilesDialog(browserStorage.getFiles()),
+			open_browser: dlgBrowserFiles.open,
 			export_markdown: exportMarkdown,
 			export_html: exportHTML
 		};
@@ -206,17 +205,7 @@ var Editor = function() {
 	function _showFileNameDialog(title, filename) {
 		$dlgFileName.modal().find('.modal-title').text(title).end().find('input').val(filename);
 	}
-	/**
-	 * @param {Array<_BrowserStorageFileObj>} files 
-	 */
-	function showBrowserFilesDialog(files) {
-		$dlgBrowserFilesList.html(files.map(file =>
-			`<li class="list-group-item d-block">
-				<a class="text-primary" href="#" onclick="editor.openFileInBrowser(${file.id})">${file.title}</a>
-				<a class="text-muted float-right" href="#"><i class="ion-trash-a"></i></a>
-			</li>`).join(''));
-		$dlgBrowserFiles.modal();
-	}
+
 //============================ Dialog
 
 //  Toast ===========================

@@ -29,7 +29,7 @@ function BrowserStorage() {
 			console.error(e);
 			return null;
 		}
-	}
+	};
 	this.getFile = id => {
 		var key = PREFIX + id;
 		try {
@@ -40,10 +40,16 @@ function BrowserStorage() {
 			console.error(e);
 			return null;
 		}
-	}
+	};
+	this.delFiles = ids => {
+		var result = [], tmpFile;
+		ids.forEach(id => (tmpFile = thiz.getFile(id)) && result.push(tmpFile));
+		result.forEach(file => storage.removeItem(PREFIX + file.id));
+		return result;
+	};
 	this.exists = id => !!storage.getItem(PREFIX + id);
 	this.saveFile = ({ id, title, content }) => {
-		storage.setItem(PREFIX + id, JSON.stringify({ id, title, content }));
+		storage.setItem(PREFIX + id, JSON.stringify({ id, title, content, timestamp: Date.now() }));
 		thiz.setLastEditFileId(id);
 
 	}
