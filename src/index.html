@@ -1,148 +1,46 @@
 <!DOCTYPE html>
-<!--
-	Mdjs.editor
-	基于Mdjs解析器的在线Markdown编辑器
-	作者:刘越
-	2016/05/04
--->
-<html>
+<html style="height: 100%">
 	<head>
-		<meta charset="utf-8">
-		<meta name="Keywords" content="markdown,editor,markdown editor,markdown编辑器"/>
-		<meta name="Description" content="在线Markdown编辑器"/>
-		<title>Mdjs Editor</title>
-		
-		<link rel="stylesheet" href="css/mdcss.css"/>
-		
-		<!-- @exclude -->
-		<!-- 此部分内容在构建发布的时候会被去掉 -->
-		<link rel="stylesheet" href="css/editor.css"/>
-		<link rel="stylesheet" href="css/dialog.css"/>
-		<link rel="stylesheet" href="css/toast.css"/>
-		<!-- @endexclude -->
-		
-		<!-- 下面这行代码是让构建发布的时候能直接引入打包好的CSS -->
-		<!-- @echo ALL_STYLESHEET -->
-		
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="renderer" content="webkit" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+		<title> {{ fields.title }} </title>
+{{ modules.styles }}
+{{ modules.markdown_output_style }}
 	</head>
-	<body>
-		<!-- 这个链接用于实现保存文件的功能 $('#filesave').click(); -->
-		<a id="filesave" style="display: none;"></a>
-		<!-- 编辑器的顶端菜单-->
-		<div id="filename">
-			<!--文件名控件-->
-			<span onclick="showModiNameDlg();">Untitled.md</span>
+	<body id="editorContainer" class="h-100" style="overflow: hidden">
+{{ modules.navbar }}
+
+		<div class="editor-dnd-tip bg-faded text-center" style="display: none">
+			<i class="ion-document-text " style="font-size: 15rem"></i><br>
+			<span style="font-size: 2rem">可将Markdown文档拖放至此处</span>
 		</div>
-		<!--顶端菜单的按钮集-->
-		<div id="menu">
-			<div class="menu_side" style="float: left">
-				<input type="file" name="filedlg" id="filedlg" style="display: none;"
-					onchange="onFileSelect(event)" onclick="onFileClick(event)" />
-				<a data-op="new" data-sc="n" title="新建一个Markdown文件">新建</a>
-				<a data-op="open" data-sc="o" title="打开本地Markdwon文件(Ctrl+O)">&nbsp;打开</a>
-				<a data-op="save" data-sc="s" title="保存到本地(Ctrl+S)">&nbsp;保存</a>
+
+		<a id="editorFileSaver" style="display: none;"></a>
+		<input type="file" id="editorFileDialog" style="display: none;"/>
+				
+
+		<div class="h-100" style="padding-top: 2.5em">
+			<div class="editor-wrapper w-50 bg-inverse float-left h-100 px-3 py-2 px-lg-5 py-lg-4" 
+				style="overflow-y: auto;">
+				<textarea id="editor" class="editor border-0 w-100 bg-inverse text-white" rows="10"
+					spellcheck="false"
+					style="overflow-x: hidden;font-size: 1.1rem;line-height: 1.5"></textarea>
 			</div>
-			<div class="menu_side" style="float: right">
-				<a data-op="export" title="导出成HTML文件">&nbsp;导出HTML</a>
-				<a data-op="help"  data-sc="191" title="Ctrl+/">&nbsp;帮助关于</a>
-				<a data-op="settings" title="编辑器设置">&nbsp;设置选项</a>
-			</div>
-		</div>
-		
-		<!--编辑器区域-->
-		<div id="editor" ondrop="onFileDropping(event);">
-			<!--编辑器输入框-->
-			<div class="half_wrapper" style="left: 0">
-				<div class="margin_wrapper">
-					<textarea id="input" spellcheck="false"></textarea>
-				</div>
-			</div>
-			<!--编辑器预览区域-->
-			<div class="half_wrapper output_wrapper" style="left: 50%;background-color: white;">
-				<div class="md" id="output"></div>
+			<div class="output-wrapper w-50 float-left h-100 px-3 py-2 px-lg-5 py-lg-4" 
+				style="overflow-y: auto">
+				<div id="output" class="output md-output-container" style="word-wrap: break-word"></div>
 			</div>
 		</div>
-	
-	<!-- 三个对话框 -->
-	<div class="dialog_bg">
-		
-		<!--新建对话框1-确认清空内容-->
-		<div class="dialog" id="newdlg" style="display: none;">
-			<div class="dialog_tt">新建文件</div>
-			<div class="dialog_bd">
-				新建一个Markdown文件<br/>
-				<span class="dialog_warn">注意:当前编辑的内容若未保存将会丢失</span>
-			</div>
-			<div class="dialog_ft">
-				<button class="dialog_ok" onclick="showNewFileDlg();">确定</button>
-				<button class="dialog_cancel" onclick="hideDialog();">取消</button>
-			</div>
-		</div>
-		
-		<!--新建对话框2-输入新文件名-->
-		<div class="dialog" id="newnamedlg" style="display: none;">
-			<div class="dialog_tt">新文件名</div>
-			<div class="dialog_bd">
-				请输入新的文件名<br/>
-				<input type="text" class="dialog_input" id="text_newname" data-value="Untitled.md" 
-					onkeydown="if(event.which==13)$('#newnamedlg .dialog_ok').click();" />
-			</div>
-			<div class="dialog_ft">
-				<button class="dialog_ok" onclick="onNewFileDlgDone();">确定</button>
-				<button class="dialog_cancel" onclick="hideDialog();">取消</button>
-			</div>
-		</div>
-		
-		<!--修改文件名对话框-->
-		<div class="dialog" id="modinamedlg" style="display: none;">
-			<div class="dialog_tt">更改文件名</div>
-			<div class="dialog_bd">
-				请输入新的文件名<br/>
-				<input type="text" class="dialog_input" id="text_modiname"
-					onkeydown="if(event.which==13)$('#modinamedlg .dialog_ok').click();" />
-			</div>
-			<div class="dialog_ft">
-				<button class="dialog_ok" onclick="onModiNameDlgDone();">确定</button>
-				<button class="dialog_cancel" onclick="hideDialog();">取消</button>
-			</div>
-		</div>
-	
-	</div>
-	
-	<!--大对话框,用于展示帮助关于页面和设置页面-->
-	<div id="helpset_dlg" style="display: none;">
-		<div id="helpset_title">
-			<span>帮助关于</span>
-			<div id="helpset_exit" onclick="$('#helpset_dlg').slideUp(500);">X</div>
-		</div>
-		<iframe src=""></iframe>
-	</div>
-	
-	<!--各种脚本-->
-	<script src="lib/jquery.min.js" type="text/javascript"></script>
-	
-	<!-- @exclude -->
-	<script src="lib/toast.js" type="text/javascript"></script>
-	<script src="lib/mdjs.js" type="text/javascript"></script>
-	<script src="lib/localio.js" type="text/javascript"></script>
-	<script src="lib/h5storage.js" type="text/javascript"></script>
-	<script src="lib/export.js" type="text/javascript"></script>
-	<script src="lib/history.jq.js" type="text/javascript"></script>
-	<script src="lib/editor.js" type="text/javascript"></script>
-	<!-- @endexclude  -->
-	
-	<!-- @echo ALL_SCRIPT -->
-	
-	<!-- @if GITHUB_DEMO='true' -->
-<a href="https://github.com/hangxingliu/mdjs.editor" target="_blank">
-	<div class="forkme" style="position: fixed;bottom: 0;right: .5em;background-color: #007100;padding: 2px;">
-	<div style="color: #eee;border: 2px solid #eee;padding: .5em 1em;margin: 0;">
-		Fork me on GitHub
-	</div>
-	</div>
-	<style>.forkme:hover{-webkit-box-shadow: 0 0 3em #007100;box-shadow: 0 0 3em #007100;}</style>
-</a>
-	<!-- @endif -->
-	
+		<script type="text/tmpl" id="editorOutputTmpl">
+{{ modules.export_template }}
+		</script>
+
+{{ modules.dialog_filename }}
+{{ modules.dialog_select_browser_files }}
+
+
+{{ modules.scripts }}
 	</body>
 </html>

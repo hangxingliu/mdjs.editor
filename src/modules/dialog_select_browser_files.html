@@ -1,0 +1,28 @@
+<div class="modal fade" id="dlgBrowserFiles">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">打开文件(浏览器存储)</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<ul class="list-group">
+			</ul>
+			<script type="text/tmpl" class="list-item-template">
+<li class="list-group-item d-block" data-id="{{ id }}">
+	<a class="text-primary item-btn-title" href="#" 
+		onclick="browserStorageDialog._clickOpen({{ id }})">{{ titleDisplay }}</a>
+	<a class="text-muted float-right item-btn-del" href="#"
+		onclick="browserStorageDialog._clickDel({{ id }})">
+		<i class="ion-trash-a"></i> 删除</a>
+	<button type="button" class="btn btn-outline-danger btn-sm float-right item-btn-undo"
+		style="display: none"
+		onclick="browserStorageDialog._clickUndo({{ id }})">
+		<i class="ion-refresh"></i> 撤销
+	</button>
+</li>
+			</script>
+		</div>
+	</div>
+</div>

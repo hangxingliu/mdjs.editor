@@ -1,8 +1,0 @@
-CACHE MANIFEST
-#VERSION: 1481396114296
-
-CACHE:
-index.html
-css/*.css
-lib/*.js
-img/*.png
