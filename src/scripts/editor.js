@@ -55,6 +55,10 @@ var Editor = function() {
 		var ipn = this.scrollTop;
 		$outputWrapper[0].scrollTop = ipn/ih*oh;
 	});
+	//窗口尺寸调整重新预览(防止出现滚动条问题)
+	$(document).resize(() => {
+		preview();
+	});
 
 	//绑定本地文件读取回调
 	Fs.on('load', content => openFile(loadingFileName, content))
