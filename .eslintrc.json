@@ -11,7 +11,8 @@
         "initFileDragAndDrop": true,
         "LocalFileSystem": true,
         "browserStorage": true,
-        "browserStorageDialog": true
+        "browserStorageDialog": true,
+        "getCustomMdjsRenderer": true
     },
 
     "parserOptions": {

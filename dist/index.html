@@ -27,7 +27,40 @@
 }
 </style>
 <style>
-	
+	.md-output-container h1,
+	.md-output-container h2,
+	.md-output-container h3,
+	.md-output-container h4,
+	.md-output-container h5,
+	.md-output-container h6
+	{
+		font-weight: 300 !important;
+		line-height: 1.8;
+	}
+	.md-output-container blockquote {
+		border-left: 6px solid #d7d7d7;
+		padding: .8em 1rem .2em 1rem;
+		margin-left: .25rem;
+	}
+	.md-output-container img {
+		display: block;
+		max-width: 80%;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.md-output-container img+.md-img-text {display: block;color: #636c72}
+	.md-output-container img:hover+.md-img-text {color: #000;}
+	.md-output-container p img {
+		display: inline-block;
+		vertical-align: text-bottom;
+		height: 1.2em;
+	}
+	.md-output-container p img+.md-img-text {
+		display: none !important;
+	}
+	.md-output-container a {
+		cursor: pointer;
+	}
 </style>
 	</head>
 	<body id="editorContainer" class="h-100" style="overflow: hidden">
@@ -132,16 +165,16 @@
 			<div class="editor-wrapper w-50 bg-inverse float-left h-100 px-3 py-2 px-lg-5 py-lg-4" 
 				style="overflow-y: auto;">
 				<textarea id="editor" class="editor border-0 w-100 bg-inverse text-white" rows="10"
-					style="overflow-x: hidden"></textarea>
+					style="overflow-x: hidden;font-size: 1.1rem;line-height: 1.5"></textarea>
 			</div>
-			<div class="output-wrappshier w-50 float-left h-100 px-3 py-2 px-lg-5 py-lg-4" 
+			<div class="output-wrapper w-50 float-left h-100 px-3 py-2 px-lg-5 py-lg-4" 
 				style="overflow-y: auto">
-				<div id="output" class="output" style="word-wrap: break-word"></div>
+				<div id="output" class="output md-output-container" style="word-wrap: break-word"></div>
 			</div>
 		</div>
 		<script type="text/tmpl" id="editorOutputTmpl">
 <!DOCTYPE html>
-<html>
+<html style="height: 100%">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -150,11 +183,106 @@
 		<title>{{ title }}</title>
 		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
 		<style>
-	
+	.md-output-container h1,
+	.md-output-container h2,
+	.md-output-container h3,
+	.md-output-container h4,
+	.md-output-container h5,
+	.md-output-container h6
+	{
+		font-weight: 300 !important;
+		line-height: 1.8;
+	}
+	.md-output-container blockquote {
+		border-left: 6px solid #d7d7d7;
+		padding: .8em 1rem .2em 1rem;
+		margin-left: .25rem;
+	}
+	.md-output-container img {
+		display: block;
+		max-width: 80%;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.md-output-container img+.md-img-text {display: block;color: #636c72}
+	.md-output-container img:hover+.md-img-text {color: #000;}
+	.md-output-container p img {
+		display: inline-block;
+		vertical-align: text-bottom;
+		height: 1.2em;
+	}
+	.md-output-container p img+.md-img-text {
+		display: none !important;
+	}
+	.md-output-container a {
+		cursor: pointer;
+	}
 </style>
+
+		<style>
+			@media print {
+				/*修复Bootstrap的bug*/
+				h1::first-letter,
+				h2::first-letter,
+				h3::first-letter,
+				h4::first-letter,
+				h5::first-letter,
+				h6::first-letter {
+					margin-top: 0;
+				}
+				pre {
+					border: none;
+				}
+				.md-body {
+					margin-top: 2rem;
+				}
+			}
+			@media screen {
+				.md-body {
+					margin: 2rem;
+				}
+			}
+			/*能显示左侧TOC时隐藏主TOC*/
+			@media screen and (min-width: 992px) {
+				.md-body {
+					width: 100%;
+					max-width: 992px;					
+					margin: 2rem auto;
+				}
+				#md_toc{
+					display: none;
+				}
+				.md-aside{
+					width: 340px;
+					height: 100%;
+					position: relative;
+					margin-right: -360px;
+					float: left;
+					overflow: auto;
+					padding: 1.25rem 1rem;
+					word-break: break-all;
+				}
+				.md-body-wrapper {
+					float: right;
+					width: 100%;
+					height: 100%;
+					padding-left: 360px;
+					padding-right: 20px;
+					overflow: auto;
+				}
+			}
+		</style>
 	</head>
-	<body>
-		{{ body }}
+	<body style="height: 100%">
+		<div class="md-aside hidden-md-down bg-faded">
+			<h3 class="pb-2" style="font-weight: 300">Table of Contents</h3>
+			{{ toc }}
+		</div>
+		<div class="md-body-wrapper">
+			<div class="md-body md-output-container">
+				{{ body }}
+			</div>
+		</div>
 	</body>
 </html>
 		</script>
@@ -216,10 +344,12 @@
 <script src="lib/jquery/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
 <script src="scripts/localFileSystem.js"></script>
 <script src="scripts/dragAndDrop.js"></script>
 <script src="scripts/browserStorage.js"></script>
 <script src="scripts/browserStorageDialog.js"></script>
+<script src="scripts/customMdjsRenderer.js"></script>
 <script src="scripts/editor.js"></script>
 	</body>
 </html>

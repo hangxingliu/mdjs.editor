@@ -1,7 +1,7 @@
 var Editor = function() {
 	var MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-	var mdjs = new Mdjs();
+	var mdjs = new Mdjs(getCustomMdjsRenderer());
 
 	var Fs = new LocalFileSystem();
 	var dlgBrowserFiles = browserStorageDialog;
@@ -16,6 +16,8 @@ var Editor = function() {
 		$fileDialog = $('#editorFileDialog'),
 		$fileSaver = $('#editorFileSaver'),
 		$editor = $('#editor'),
+		$editorWrapper = $container.find('.editor-wrapper'),
+		$outputWrapper = $container.find('.output-wrapper'),
 		$output = $('#output');
 	
 	var $dlgFileName = $('#dlgNewFile'),
@@ -34,7 +36,7 @@ var Editor = function() {
 
 	var outputTmpl = $('#editorOutputTmpl').html();
 
-	$editor.keydown( e => {
+	$editor.keydown(e => {
 		//按下Tab键 插入Tab
 		if (e.which == 9) {
 			insertText('\t');
@@ -46,6 +48,12 @@ var Editor = function() {
 
 	}).bind('input', () => {
 		preview();
+	});
+	$editorWrapper.scroll(function () {//预览区域滚动
+		var ih = $editorWrapper[0].scrollHeight - $editorWrapper.height(),
+			oh = $outputWrapper[0].scrollHeight - $outputWrapper.height();
+		var ipn = this.scrollTop;
+		$outputWrapper[0].scrollTop = ipn/ih*oh;
 	});
 
 	//绑定本地文件读取回调
@@ -134,8 +142,10 @@ var Editor = function() {
 		Fs.saveFile($fileSaver[0], currentFileInfo.title + '.md', $editor.val());
 	}
 	function exportHTML() {
-		var obj = { title: getDocTitle(), body: $output.html() },
+		var obj = { title: getDocTitle(), body: $output.html(), toc: $output.find('#md_toc_content').html()},
 			html = outputTmpl.replace(/\{\{\s+(\w+)\s+\}\}/g, (_, name) => obj[name] || '');
+		//展开TOC
+		html = html.replace('__show_if_export__', 'show');
 		Fs.saveFile($fileSaver[0], currentFileInfo.title + '.html', html);
 		function getDocTitle() {
 			return ($output.find('h1,h2,h3,h4,h5,h6').eq(0).text()

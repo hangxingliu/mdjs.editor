@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,8 +8,70 @@
 		<title>{{ title }}</title>
 		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
 		{{ modules.markdown_output_style }}
+
+		<style>
+			@media print {
+				/*修复Bootstrap的bug*/
+				h1::first-letter,
+				h2::first-letter,
+				h3::first-letter,
+				h4::first-letter,
+				h5::first-letter,
+				h6::first-letter {
+					margin-top: 0;
+				}
+				pre {
+					border: none;
+				}
+				.md-body {
+					margin-top: 2rem;
+				}
+			}
+			@media screen {
+				.md-body {
+					margin: 2rem;
+				}
+			}
+			/*能显示左侧TOC时隐藏主TOC*/
+			@media screen and (min-width: 992px) {
+				.md-body {
+					width: 100%;
+					max-width: 992px;					
+					margin: 2rem auto;
+				}
+				#md_toc{
+					display: none;
+				}
+				.md-aside{
+					width: 340px;
+					height: 100%;
+					position: relative;
+					margin-right: -360px;
+					float: left;
+					overflow: auto;
+					padding: 1.25rem 1rem;
+					word-break: break-all;
+				}
+				.md-body-wrapper {
+					float: right;
+					width: 100%;
+					height: 100%;
+					padding-left: 360px;
+					padding-right: 20px;
+					overflow: auto;
+				}
+			}
+		</style>
 	</head>
-	<body>
-		{{ body }}
+	<body style="height: 100%">
+		<div class="md-aside hidden-md-down bg-faded">
+			<h3 class="pb-2" style="font-weight: 300">Table of Contents</h3>
+			{{ toc }}
+		</div>
+		<div class="md-body-wrapper">
+			<div class="md-body md-output-container">
+				{{ body }}
+			</div>
+		</div>
 	</body>
 </html>
