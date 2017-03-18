@@ -56,7 +56,7 @@ var Editor = function() {
 		$outputWrapper[0].scrollTop = ipn/ih*oh;
 	});
 	//窗口尺寸调整重新预览(防止出现滚动条问题)
-	$(document).resize(() => {
+	$(window).resize(() => {
 		preview();
 	});
 
@@ -100,9 +100,10 @@ var Editor = function() {
 		var ele = $editor[0], baseRow = markdown.split('\n').length;
 		do {
 			ele.rows = Math.max(baseRow, 20);
-			baseRow += 5;
-		} while(ele.scrollHeight > ele.clientHeight);
-		$output.html(mdjs.md2html(markdown));
+			baseRow += 10;
+		} while (ele.scrollHeight > ele.clientHeight);
+		var html = mdjs.md2html(markdown);
+		$output.html(html);
 	}
 
 	function setEditorSelection(start, end) {
