@@ -1,5 +1,2 @@
-/node_modules
-/demo
-/.project
-/lab
-/md_src
+node_modules
+tmp
