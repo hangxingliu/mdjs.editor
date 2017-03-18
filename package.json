@@ -1,6 +1,6 @@
 {
 	"name": "mdjs.editor",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "An online markdown editor",
 	"main": "index.js",
 	"dependencies": {},
