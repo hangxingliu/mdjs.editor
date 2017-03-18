@@ -23,7 +23,7 @@ function main(quick = false) {
 	quick || safeCopy(`${from}/lib`, `${to}/lib`);
 
 	safeCopy(`${from}/scripts`, `${to}/scripts`);
-	safeCopy(`${from}/styles`, `${to}/styles`);
+	// safeCopy(`${from}/styles`, `${to}/styles`);
 
 	loadFields();
 	

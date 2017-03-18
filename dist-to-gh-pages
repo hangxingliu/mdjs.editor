@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+node build.js \
+	&& rm tmp -rf \
+	&& mkdir tmp \
+	&& cp dist tmp -rf \
+	&& echo "  distribute success!"
