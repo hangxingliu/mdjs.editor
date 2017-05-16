@@ -32,7 +32,7 @@ function getCustomMdjsRenderer() {
 	
 	renderer.tag.codeBlock = [
 		'<div class="card my-2 bg-faded"><div class="card-block"><h6 class="card-subtitle text-muted">$language</h6>' +
-		'<pre><code>',
+		'<pre class="mt-3"><code>',
 		'</code></pre></div></div>'
 	];
 	renderer.tag.footNote = [
