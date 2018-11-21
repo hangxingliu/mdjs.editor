@@ -1,35 +1,54 @@
 #!/usr/bin/env node
-
-const from = 'src';
-const to = 'dist';
-
-
-var fs = require('fs-extra'),
-	{ dirname } = require('path'),
-	watcher = require('watch');
+//@ts-check
 
 require('colors');
 
+const fs = require('fs-extra');
+const { dirname, join } = require('path');
+const watcher = require('watch');
+
+
+const from = join(__dirname, 'src');
+const to = join(__dirname, 'dist');
+const node_modules = join(__dirname, 'node_modules');
+
 const TEMPLATE_REPLACE_REGEX = /\{\{\s+(modules|fields)\.(\w+?)\s+\}\}/g;
 
-var rmIfExist = path => fs.existsSync(path) && fs.removeSync(path),
-	safeWrite = (path, content, _) => (fs.existsSync(_ = dirname(path)) || fs.mkdirsSync(_)) + fs.writeFileSync(path, content),
-	safeCopy = (from, to, _) => (fs.existsSync(_ = dirname(to)) || fs.mkdirsSync(_)) + fs.copySync(from, to);
-
-var fields = {};
+let fields = {};
 
 function main(quick = false) {
-	quick || rmIfExist(to);
-	quick || safeCopy(`${from}/lib`, `${to}/lib`);
-
-	safeCopy(`${from}/scripts`, `${to}/scripts`);
-	// safeCopy(`${from}/styles`, `${to}/styles`);
+	if (!quick) {
+		rmIfExist(to);
+		safeCopy(`${from}/scripts`, `${to}/scripts`);
+		safeCopy(
+			`${node_modules}/md-js/mdjs.min.js`,
+			`${from}/lib/mdjs/mdjs.min.js`);
+	}
 
 	loadFields();
 	
 	safeWrite(`${to}/index.html`, buildTemplateFile(`index.html`));
 
 	console.log(`  build done!`);
+}
+
+function rmIfExist(path) {
+	if(fs.existsSync(path))
+		fs.removeSync(path);
+}
+
+function safeWrite(path, content) { 
+	const dir = dirname(path);
+	if (!fs.existsSync(dir))
+		fs.mkdirsSync(dir);
+	fs.writeFileSync(path, content)
+}
+
+function safeCopy(from, to) {
+	const dir = dirname(to);
+	if (fs.existsSync(dir))
+		fs.mkdirsSync(dir);
+	fs.copySync(from, to)
 }
 
 function loadFields() {

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.0.4
+
+- 升级了`Mdjs`
+
 ## 1.0.3 **Alpha**
 
 - 升级了`Mdjs`

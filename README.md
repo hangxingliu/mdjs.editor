@@ -17,24 +17,9 @@
 
 ## 目前版本 
 
-### 1.0.3 **Alpha**
+### 1.0.4
 
 - 升级了`Mdjs`
-
-### 1.0.2 **Alpha**
-
-- 升级了`Mdjs`
-
-### 1.0.1 **Alpha**
-
-- 修复了窗口尺寸变化出现额外滚动条的bug
-
-### 1.0.0 **Alpha**
-
-- 相对于上一个版本几乎完全重新编写
-- 支持导入/导出本地文件
-- 支持导出HTML文件(导出HTML支持左侧目录)
-- 支持保存 Markdown 内容到浏览器localStorage(自动保存)
 
 更多更新日志请参阅: [CHANGELOG.md](CHANGELOG.md)
 
@@ -58,12 +43,12 @@
 - [ionicons](http://ionicons.com/)
 - [Mdjs][mdjs]
 
-## 作者
+## Author (作者)
 
-**刘越(hangxingliu)**   
-[Git@OSC](https://git.oschina.net/voyageliu)   
-[Github](https://github.com/hangxingliu)
+@hangxingliu (Liu Yue)   
+[Github](https://github.com/hangxingliu)   
+[码云Gitee](https://git.oschina.net/voyageliu)   
 
-## 开源协议
+## License (开源协议)
 
 [Apache Licence 2.0](LICENSE)
