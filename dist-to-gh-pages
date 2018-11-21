@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 
+set +x;
 node build.js \
 	&& rm tmp -rf \
 	&& mkdir tmp \
-	&& cp dist tmp -rf \
+	&& cp dist/* tmp -rf \
+	&& cp src/lib tmp -rf \
+	&& git checkout gh-pages \
+	&& cp tmp/* . -rf \
+	&& git add . \
+	&& git status \
 	&& echo "  distribute success!"
+set -x;
